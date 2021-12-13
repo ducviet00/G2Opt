@@ -146,6 +146,26 @@ class G2OPT:
         individual = {"gen": offspring, "fitness": self.fitness(all_path, t_arrive), "path": all_path}
         return individual
 
+    def two_opt(self, chromosome, fitness):
+        def reverse(lst):
+            lst.reverse()
+            return lst
+        i = 0
+        opt_path
+        while i < 100:
+            i += 1
+            for i in range(len(offspring)):
+                for j in range(i+1, len(offspring)):
+                    new_chromo = chromosome[:i] + reverse(chromosome[i:j]) + chromosome[j:]
+                    all_path, t_arrive = self.get_path(new_chromo)
+                    new_fitness = self.fitness(all_path, t_arrive)
+                    if new_fitness < fitness:
+                        chromosome = new_chromo
+                        fitness = new_fitness
+                        opt_path = all_path
+
+        return chromosome, fitness, opt_path
+
     def evolution(self, p_c=0.9, p_m=0.05):
         p = self.population()
         pop_size = len(p)
@@ -169,8 +189,11 @@ class G2OPT:
             p = p[:pop_size]
             print("ite =", ite, "fitness =", p[0]["fitness"], "nb mc =", len(p[0]["path"]))
             ite = ite + 1
+        
+        opt_chromo, fitness, all_path = self.two_opt(p[0]["gen"], p[0]["fitness"])
+        opt_individual = {"gen": opt_chromo, "fitness": fitness, "path": all_path}
 
-        return p[0]
+        return opt_individual
 
     def get_charging_route(self, network=None):
         self.update(network=network)    # def partition(self, partition_func=partition_function):

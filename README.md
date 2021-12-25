@@ -1,4 +1,22 @@
 # G2OPT
 
-# G@OPT
+## INSTALLATION
 
+~~~bash
+pip install -r requirements.txt
+~~~
+
+## RUN
+
+~~~bash
+python Simulate.py
+~~~
+
+options:
+
+- experiment_type: 'node', 'target', 'MC', 'prob', 'package' or 'cluster'.
+- experiment_index: 0 - 4
+
+## NOTE
+
+- 2-opt algorithm takes long time to run, set `self.2opt_loop = 0` in `Optimizer/G2OPT.py` to disable 2opt

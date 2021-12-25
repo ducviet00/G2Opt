@@ -2,6 +2,7 @@ import random
 from operator import itemgetter
 
 import numpy as np
+from tqdm import tqdm
 from scipy.spatial import distance
 
 from Simulator.Network import Parameter as para
@@ -27,7 +28,7 @@ class G2OPT:
         self.duty_list = []
         # this parameter can be changed
         self.pop_size = 20  # the number of individual in population
-        self.max_gen = 100  # the number of generation
+        self.max_gen = 10  # the number of generation
         # this parameter is not changed
         self.t_l = 0  # lower bound of charging
         self.t_u = (self.e - self.E_min) / self.p  # upper bound of charging
@@ -151,11 +152,11 @@ class G2OPT:
             lst.reverse()
             return lst
         i = 0
-        opt_path
-        while i < 100:
+        print("Starting 2OPT algorithm")
+        while i < 5:
             i += 1
-            for i in range(len(offspring)):
-                for j in range(i+1, len(offspring)):
+            for i in tqdm(range(len(chromosome))):
+                for j in range(i+1, len(chromosome)):
                     new_chromo = chromosome[:i] + reverse(chromosome[i:j]) + chromosome[j:]
                     all_path, t_arrive = self.get_path(new_chromo)
                     new_fitness = self.fitness(all_path, t_arrive)
@@ -163,7 +164,8 @@ class G2OPT:
                         chromosome = new_chromo
                         fitness = new_fitness
                         opt_path = all_path
-
+            print(f"loop: {i}/5, fitness: {fitness}")
+        print("DONE OPT", "fitness =", fitness, "nb mc =", len(all_path))
         return chromosome, fitness, opt_path
 
     def evolution(self, p_c=0.9, p_m=0.05):

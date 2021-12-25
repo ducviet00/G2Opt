@@ -19,4 +19,4 @@ options:
 
 ## NOTE
 
-- 2-opt algorithm takes long time to run, set `self.2opt_loop = 0` in `Optimizer/G2OPT.py` to disable 2opt
+- 2-opt algorithm takes long time to run, set `self.two_opt = 0` in `Optimizer/G2OPT.py` to disable 2opt

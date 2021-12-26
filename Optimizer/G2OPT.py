@@ -32,7 +32,7 @@ class G2OPT:
         # this parameter is not changed
         self.t_l = 0  # lower bound of charging
         self.t_u = (self.e - self.E_min) / self.p  # upper bound of charging
-        self.two_opt = 1 # running loop for local search 2-opt algorithm
+        self.two_opt_loop = 1 # running loop for local search 2-opt algorithm
 
     def fitness(self, all_path, t_arrive):
         travel = 0
@@ -156,7 +156,7 @@ class G2OPT:
         print("Starting 2OPT algorithm")
         all_path, _ = self.get_path(chromosome)
         opt_path = all_path
-        while i < self.two_opt:
+        while i < self.two_opt_loop:
             i += 1
             for i in tqdm(range(len(chromosome))):
                 for j in range(i+1, len(chromosome)):
@@ -167,7 +167,7 @@ class G2OPT:
                         chromosome = new_chromo
                         fitness = new_fitness
                         opt_path = all_path
-            print(f"loop: {i}/{self.two_opt}, fitness: {fitness}")
+            print(f"loop: {i}/{self.two_opt_loop}, fitness: {fitness}")
         print("DONE OPT", "fitness =", fitness, "nb mc =", len(all_path))
         return chromosome, fitness, opt_path
 

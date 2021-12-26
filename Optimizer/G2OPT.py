@@ -154,6 +154,8 @@ class G2OPT:
             return lst
         i = 0
         print("Starting 2OPT algorithm")
+        all_path, _ = self.get_path(chromosome)
+        opt_path = all_path
         while i < self.two_opt:
             i += 1
             for i in tqdm(range(len(chromosome))):
